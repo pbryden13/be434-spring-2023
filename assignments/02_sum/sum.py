@@ -2,7 +2,7 @@
 """
 Author : philipbryden <philipbryden@localhost>
 Date   : 2023-02-01
-Purpose: Rock the Casbah
+Purpose: sum(HW2)
 """
 
 import argparse
@@ -13,58 +13,37 @@ def get_args():
     """Get command-line arguments"""
 
     parser = argparse.ArgumentParser(
-        description='Rock the Casbah',
+        description='sum the numbers',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('positional',
-                        metavar='str',
-                        help='A positional argument')
-
-    parser.add_argument('-a',
-                        '--arg',
-                        help='A named string argument',
-                        metavar='str',
-                        type=str,
-                        default='')
-
-    parser.add_argument('-i',
-                        '--int',
-                        help='A named integer argument',
-                        metavar='int',
+    parser.add_argument('numbers',
+                        metavar='num',
                         type=int,
-                        default=0)
-
-    parser.add_argument('-f',
-                        '--file',
-                        help='A readable file',
-                        metavar='FILE',
-                        type=argparse.FileType('rt'),
-                        default=None)
-
-    parser.add_argument('-o',
-                        '--on',
-                        help='A boolean flag',
-                        action='store_true')
+                        nargs='+',
+                        help='numbers to be added')
 
     return parser.parse_args()
 
 
 # --------------------------------------------------
 def main():
-    """Make a jazz noise here"""
+    """sum the numbers"""
 
     args = get_args()
-    str_arg = args.arg
-    int_arg = args.int
-    file_arg = args.file
-    flag_arg = args.on
-    pos_arg = args.positional
+    n = args.numbers
+    num = len(n)
 
-    print(f'str_arg = "{str_arg}"')
-    print(f'int_arg = "{int_arg}"')
-    print('file_arg = "{}"'.format(file_arg.name if file_arg else ''))
-    print(f'flag_arg = "{flag_arg}"')
-    print(f'positional = "{pos_arg}"')
+    if num == 1:
+        print(n[0], '=', n[0])
+
+    else:
+        n2 = 0
+        for i in range(0, num, 1):
+            n2 = n[i] + n2
+        nm = n[0:-1]
+        for item in nm:
+            print(item, end=" + ")
+        print(n[-1], '=', n2)
 
 
 # --------------------------------------------------
