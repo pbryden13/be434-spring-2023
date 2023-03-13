@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
+
 """
-Author : philipbryden <philipbryden@localhost>
+Author : philipbryden <philipbryden@arizona.edu>
 Date   : 2023-02-13
 Purpose: hw4 cat
 """
-import os
-import io
-import sys
 import argparse
 
 
@@ -19,24 +17,21 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('file',
+                        nargs='*',
                         metavar='FILE',
-                        help='Input file(s)')
+                        help='Input file(s)',
+                        type=argparse.FileType('rt'),
+                        default=None)
 
     parser.add_argument('-n',
                         '--number',
-                        help='Number the lines',
+                        help=' boolean flag "with lines"',
                         action='store_true')
 
     args = parser.parse_args()
 
-    if os.path.isfile(args.file):
-        file_exists = os.path.exists(args.file)
-        if file_exists==True:
-            args.file = open(args.file).read().rstrip()
-        else:
-            print(f"No such file or directory: '{args.file}'")
-
     return args
+
 
 # --------------------------------------------------
 def main():
@@ -44,18 +39,16 @@ def main():
 
     args = get_args()
 
-    print(args.file)
-    
-    #str_arg = args.arg
-    
-    #flag_arg = args.on
-    #pos_arg = args.positional
-
-    #print(f'str_arg = "{str_arg}"')
-    #print(f'int_arg = "{int_arg}"')
-    #print('file_arg = "{}"'.format(file_arg.name if file_arg else ''))
-    #print(f'flag_arg = "{flag_arg}"')
-    #print(f'positional = "{pos_arg}"')
+    for fh in args.file:
+        line = args.file
+        if args.number is True:
+            line_num = 1
+            for line in fh:
+                print(f'{line_num:6}\t{line}', end='')
+                line_num += 1
+        else:
+            for line in fh:
+                print(f'{line}', end='')
 
 
 # --------------------------------------------------
