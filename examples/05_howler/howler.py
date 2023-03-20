@@ -24,7 +24,7 @@ def get_args():
 
     parser.add_argument('-o',
                         '--outfile',
-                        help='out put file name',
+                        help='output file name',
                         metavar='str',
                         type=str,
                         default='')
