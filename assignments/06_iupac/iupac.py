@@ -6,6 +6,7 @@ Purpose: Rock the Casbah
 """
 
 import argparse
+import io
 
 
 # --------------------------------------------------
@@ -17,16 +18,12 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('seq', metavar='SEQ', nargs='+', help='Input sequence(s)')
-    '''
+    
     parser.add_argument('-o',
                         '--outfile',
-                        help='Output filename',
-                        metavar='FILE',
-                        default=_io.TextIOWrapper,
-                        name='<stdout>',
-                        mode = 'w',
-                        encoding='utf-8')
-                        '''
+                        help='output file name',
+                        type=argparse.FileType('wt'),
+                        default='out.txt')
 
     args = parser.parse_args()
     return args
@@ -40,14 +37,15 @@ def main():
 
     args = get_args()
     seq=' '.join(map(str,args.seq))
-    seq = seq.replace("'", "")
+    seq = seq.replace('"', "'")
     seq = seq.replace("]", "")
     seq = seq.replace("[", "")
-    
+
+    #print(seq)
     
 
     iupactable = {
-        "A": "A",
+        'A': 'A',
         "C": "C",
         "G": "G",
         "T": "T",
@@ -65,18 +63,21 @@ def main():
         "N": "[ACGT]"
     }
 
-    ip = ''
+    p=''
+    #p+="'"
+    p+=args.seq[0]
+    p+=" "
+    
     for char in seq:
-        p=''.join(args.seq[0])
-        if char == ' ':
-            ip += "', '" 
-            ip += ''.join(args.seq[1])
-            ip += " "
-        else:
-            ip +=  iupactable[char]
+        if char == " ":
+            p+="', '"
+            p+=args.seq[1]
             p+=" "
-            p+=''.join(ip)
-    print(p)
+        else:
+            p+=iupactable[char]
+    
+    print(p)  
+
 
 
 # --------------------------------------------------
