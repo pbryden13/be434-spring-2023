@@ -33,6 +33,8 @@ def get_args():
 
 
 # --------------------------------------------------
+
+
 def main():
     """iupac"""
 
@@ -40,8 +42,9 @@ def main():
     seq=' '.join(map(str,args.seq))
     seq = seq.replace("'", "")
     seq = seq.replace("]", "")
-    seq = seq.replace("[", "") 
-    #args.seq = args.seq.upper()
+    seq = seq.replace("[", "")
+    
+    
 
     iupactable = {
         "A": "A",
@@ -64,17 +67,15 @@ def main():
 
     ip = ''
     for char in seq:
-        if char == '':
-            ip += ","
-            ip += seq
+        p=''.join(args.seq[0])
+        if char == ' ':
+            ip += "', '" 
+            ip += ''.join(args.seq[1])
+            ip += " "
         else:
             ip +=  iupactable[char]
-
-           
-    p=''.join(seq)
-    p+=" "
-    p+=''.join(ip)
-
+            p+=" "
+            p+=''.join(ip)
     print(p)
 
 
